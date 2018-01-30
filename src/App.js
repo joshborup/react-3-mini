@@ -87,7 +87,11 @@ class App extends Component {
 
   filterByMake() {
     let make = this.refs.selectedMake.value;
-
+    axios.get(`https://joes-autos.herokuapp.com/api/vehicles?make=${make}`).then(response => {
+      this.setState({
+        vehiclesToDisplay: response.data
+      })
+    })
 
     // axios (GET)
     // setState with response -> vehiclesToDisplay
@@ -95,7 +99,11 @@ class App extends Component {
 
   filterByColor() {
     let color = this.refs.selectedColor.value;
-
+    axios.get(`https://joes-autos.herokuapp.com/api/vehicles?color=${color}`).then(response => {
+      this.setState({
+        vehiclesToDisplay: response.data
+      })
+    })
     // axios (GET)
     // setState with response -> vehiclesToDisplay
   }
@@ -166,17 +174,12 @@ class App extends Component {
     let searchLetters = this.refs.searchLetters.value;
 
     // axios (GET)
-    let get_promise = axios.get('https://joes-autos.herokuapp.com/api/vehicles');
-    get_promise.then(results => {
-      toast.success('success');
-      for(let i = 0; i < results.data.length; i++){
-        if(results.data[i].make.includes(searchLetters)){
-          this.setState({
-            vehiclesToDisplay: this.data[i]
-          })
-        }
-      }
-    }).catch(() => toast.error('error'))
+    axios.get(`https://joes-autos.herokuapp.com/api/buyers?name=${searchLetters}`).then(response => {
+      this.setState({
+        buyersToDisplay: response.data
+      })
+    })
+    
     
     // setState with response -> buyersToDisplay
   }
@@ -185,6 +188,12 @@ class App extends Component {
     let year = this.refs.searchYear.value;
 
     // axios (GET)
+    axios.get(`https://joes-autos.herokuapp.com/api/vehicles?year=${year}`).then(response => {
+      this.setState({
+        vehiclesToDisplay: response.data
+      })
+    })
+    
     // setState with response -> vehiclesToDisplay
   }
 
